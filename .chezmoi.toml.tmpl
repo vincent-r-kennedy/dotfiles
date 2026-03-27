@@ -1,8 +1,8 @@
 {{- $name := promptString "Git user name" -}}
 {{- $email := promptString "Git email" -}}
-{{- $is_main := promptBool "Is this the main (homebrew admin) account" -}}
+{{- $is_main := promptString "Is this the main (homebrew admin) account? (yes/no)" -}}
 
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}
-    is_main_account = {{ $is_main }}
+    is_main_account = {{ eq $is_main "yes" }}
