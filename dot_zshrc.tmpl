@@ -30,10 +30,7 @@ zinit light-mode for \
 # ──────────────────────────────────────────────
 # Completions (must come before plugins)
 # ──────────────────────────────────────────────
-{{- if not .is_main_account }}
-ZSH_DISABLE_COMPFIX=true
-{{- end }}
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit{{ if not .is_main_account }} -u{{ end }}
 
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
