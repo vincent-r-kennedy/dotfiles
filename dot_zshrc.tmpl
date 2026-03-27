@@ -1,8 +1,10 @@
+{{- if not .is_main_account }}
 # ──────────────────────────────────────────────
 # Homebrew (managed by vincent account)
 # ──────────────────────────────────────────────
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+{{- end }}
 # ──────────────────────────────────────────────
 # Zinit bootstrap (auto-installs if missing)
 # ──────────────────────────────────────────────
@@ -28,7 +30,9 @@ zinit light-mode for \
 # ──────────────────────────────────────────────
 # Completions (must come before plugins)
 # ──────────────────────────────────────────────
+{{- if not .is_main_account }}
 ZSH_DISABLE_COMPFIX=true
+{{- end }}
 autoload -Uz compinit && compinit
 
 zinit light zsh-users/zsh-completions
@@ -74,6 +78,21 @@ eval "$(fzf --zsh)"
 
 # GCP SDK
 export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+{{- if .is_main_account }}
+
+# ──────────────────────────────────────────────
+# Homebrew wrapper - fixes brewusers group perms after install/upgrade
+# ──────────────────────────────────────────────
+brew() {
+  command brew "$@"
+  local ret=$?
+  if [[ $ret -eq 0 && "$1" =~ ^(install|upgrade|reinstall)$ ]]; then
+    echo "Fixing brewusers group permissions..."
+    chmod -R g+rX /opt/homebrew 2>/dev/null
+  fi
+  return $ret
+}
+{{- end }}
 
 # Starship prompt (must be last)
 eval "$(starship init zsh)"

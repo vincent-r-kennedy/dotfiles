@@ -1,0 +1,8 @@
+{{- $name := promptString "Git user name" -}}
+{{- $email := promptString "Git email" -}}
+{{- $is_main := promptBool "Is this the main (homebrew admin) account" -}}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    is_main_account = {{ $is_main }}
