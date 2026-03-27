@@ -1,0 +1,23 @@
+# or Zed Mono, Monaspace, etc.
+# font-family = "JetBrains Mono"
+font-family = "JetBrainsMono Nerd Font"
+
+font-size = 14
+
+# or tokyo-night, gruvbox, etc.
+theme = Catppuccin Mocha
+
+# cleaner look on macOS
+macos-titlebar-style = tabs
+
+background-opacity = 0.95
+
+cursor-style = bar
+
+shell-integration = zsh
+
+# makes alt keybindings work properly
+macos-option-as-alt = true
+
+# Quick terminal (drop-down)
+keybind = global:super+grave_accent=toggle_quick_terminal

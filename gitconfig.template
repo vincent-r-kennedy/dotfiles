@@ -1,0 +1,10 @@
+[user]
+	name = __NAME__
+	email = __EMAIL__
+[core]
+	editor = nano
+	sshCommand = ssh -i ~/.ssh/id_ed25519
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true

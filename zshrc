@@ -1,0 +1,79 @@
+# ──────────────────────────────────────────────
+# Homebrew (managed by vincent account)
+# ──────────────────────────────────────────────
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ──────────────────────────────────────────────
+# Zinit bootstrap (auto-installs if missing)
+# ──────────────────────────────────────────────
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Zinit annexes
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+# ──────────────────────────────────────────────
+# Completions (must come before plugins)
+# ──────────────────────────────────────────────
+ZSH_DISABLE_COMPFIX=true
+autoload -Uz compinit && compinit
+
+zinit light zsh-users/zsh-completions
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+
+# ──────────────────────────────────────────────
+# History
+# ──────────────────────────────────────────────
+HISTSIZE=100000
+SAVEHIST=100000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE     # don't save commands prefixed with a space
+
+# ──────────────────────────────────────────────
+# Shell options
+# ──────────────────────────────────────────────
+setopt AUTO_CD
+setopt CORRECT
+setopt NO_BEEP
+
+# ──────────────────────────────────────────────
+# Aliases
+# ──────────────────────────────────────────────
+alias b='bat'                          # bat shorthand, cat still works normally
+alias ls='eza --icons'
+alias ll='eza -la --icons --git'
+alias la='eza -a --icons'
+alias grep='rg'
+alias find='fd'
+
+# ──────────────────────────────────────────────
+# Tools
+# ──────────────────────────────────────────────
+
+# zoxide (smart cd) - replaces cd alias which can cause issues
+eval "$(zoxide init zsh)"
+
+# fzf (fuzzy finder)
+eval "$(fzf --zsh)"
+
+# GCP SDK
+export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+
+# Starship prompt (must be last)
+eval "$(starship init zsh)"
