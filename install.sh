@@ -3,6 +3,32 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+confirm_overwrite() {
+  local file=$1
+  if [[ -f "$file" ]]; then
+    read -p "  $file already exists. Overwrite? [y/N] " answer
+    [[ "$answer" =~ ^[Yy]$ ]]
+  fi
+}
+
+safe_copy() {
+  local src=$1
+  local dest=$2
+  local label=$3
+  if [[ -f "$dest" ]]; then
+    if confirm_overwrite "$dest"; then
+      cp "$src" "$dest"
+      echo "  Overwrote $label"
+    else
+      echo "  Skipped $label"
+      return
+    fi
+  else
+    cp "$src" "$dest"
+    echo "  Installed $label"
+  fi
+}
+
 echo "==> Client account dotfiles installer"
 echo ""
 
@@ -14,24 +40,19 @@ echo ""
 echo "==> Installing dotfiles for $(whoami)..."
 
 # .zshrc
-cp "$DOTFILES_DIR/zshrc" ~/.zshrc
-echo "  Installed .zshrc"
+safe_copy "$DOTFILES_DIR/zshrc" ~/.zshrc ".zshrc"
 
 # Ghostty
 mkdir -p ~/.config/ghostty
-cp "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config
-echo "  Installed ghostty config"
+safe_copy "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config "ghostty config"
 
 # Starship
-cp "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
-echo "  Installed starship.toml"
+safe_copy "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml "starship.toml"
 
 # SSH
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
-cp "$DOTFILES_DIR/ssh/config" ~/.ssh/config
-chmod 600 ~/.ssh/config
-echo "  Installed ssh config"
+safe_copy "$DOTFILES_DIR/ssh/config" ~/.ssh/config "ssh config"
 
 # Generate SSH key if not present
 if [[ ! -f ~/.ssh/id_ed25519 ]]; then
@@ -42,13 +63,24 @@ else
 fi
 
 # Git config
-sed -e "s/__NAME__/$git_name/" -e "s/__EMAIL__/$git_email/" \
-  "$DOTFILES_DIR/gitconfig.template" > ~/.gitconfig
-echo "  Installed .gitconfig"
+if [[ -f ~/.gitconfig ]]; then
+  if confirm_overwrite ~/.gitconfig; then
+    sed -e "s/__NAME__/$git_name/" -e "s/__EMAIL__/$git_email/" \
+      "$DOTFILES_DIR/gitconfig.template" > ~/.gitconfig
+    echo "  Overwrote .gitconfig"
+  else
+    echo "  Skipped .gitconfig"
+  fi
+else
+  sed -e "s/__NAME__/$git_name/" -e "s/__EMAIL__/$git_email/" \
+    "$DOTFILES_DIR/gitconfig.template" > ~/.gitconfig
+  echo "  Installed .gitconfig"
+fi
 
 # Lock down permissions
 chmod 700 ~/.ssh
-chmod 600 ~/.ssh/id_ed25519 ~/.ssh/config
+[[ -f ~/.ssh/id_ed25519 ]] && chmod 600 ~/.ssh/id_ed25519
+[[ -f ~/.ssh/config ]] && chmod 600 ~/.ssh/config
 chmod go-rwx ~/.config ~/.gitconfig
 
 echo ""
