@@ -75,6 +75,9 @@ eval "$(fzf --zsh)"
 
 # GCP SDK
 export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+
+# Docker / Colima
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 {{- if .is_main_account }}
 
 # ──────────────────────────────────────────────
