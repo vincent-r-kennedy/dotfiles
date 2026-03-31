@@ -1,0 +1,69 @@
+#!/bin/bash
+set -euo pipefail
+
+{{- if not .is_main_account }}
+echo "Skipping Homebrew setup — packages are managed by the main account"
+exit 0
+{{- end }}
+
+# ──────────────────────────────────────────────
+# Install Homebrew if missing
+# ──────────────────────────────────────────────
+if ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ──────────────────────────────────────────────
+# Taps
+# ──────────────────────────────────────────────
+brew tap ankitpokhrel/jira-cli
+brew tap sdkman/tap
+
+# ──────────────────────────────────────────────
+# Formulae
+# ──────────────────────────────────────────────
+formulae=(
+  awscli
+  bat
+  chezmoi
+  colima
+  docker
+  eza
+  fd
+  fzf
+  gh
+  jira-cli
+  node@20
+  ripgrep
+  sdkman-cli
+  starship
+  zoxide
+)
+
+for pkg in "${formulae[@]}"; do
+  brew install "$pkg" 2>/dev/null || true
+done
+
+# ──────────────────────────────────────────────
+# Casks
+# ──────────────────────────────────────────────
+casks=(
+  claude-code
+  font-jetbrains-mono-nerd-font
+  gcloud-cli
+  tunnelblick
+)
+
+for pkg in "${casks[@]}"; do
+  brew install --cask "$pkg" 2>/dev/null || true
+done
+
+# ──────────────────────────────────────────────
+# Fix permissions for shared access
+# ──────────────────────────────────────────────
+echo "Fixing brewusers group permissions..."
+chmod -R g+rX /opt/homebrew 2>/dev/null || true
+
+echo "Homebrew packages installed successfully"
