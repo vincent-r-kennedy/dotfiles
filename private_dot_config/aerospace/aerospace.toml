@@ -93,13 +93,16 @@ enter = 'mode main'
 esc = 'mode main'
 
 # ──────────────────────────────────────────────
-# App-to-workspace assignments (optional)
-# Uncomment and adjust to your preference
+# Auto-layout: right-side apps open in accordion
 # ──────────────────────────────────────────────
-# [[on-window-detected]]
-# if.app-id = 'com.jetbrains.intellij'
-# run = 'move-node-to-workspace 1'
-#
-# [[on-window-detected]]
-# if.app-id = 'com.google.Chrome'
-# run = 'move-node-to-workspace 2'
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['layout accordion']
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = ['layout accordion']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = ['layout accordion']
