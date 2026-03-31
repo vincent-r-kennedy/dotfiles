@@ -1,6 +1,6 @@
-{{- $name := promptString "Git user name" -}}
-{{- $email := promptString "Git email" -}}
-{{- $is_main := promptString "Is this the main (homebrew admin) account? (yes/no)" -}}
+{{- $name := promptStringOnce . "name" "Git user name" -}}
+{{- $email := promptStringOnce . "email" "Git email" -}}
+{{- $is_main := promptStringOnce . "is_main_raw" "Is this the main (homebrew admin) account? (yes/no)" -}}
 
 [data]
     name = {{ $name | quote }}
