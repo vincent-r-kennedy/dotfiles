@@ -52,6 +52,9 @@ alt-shift-f = 'layout floating tiling'
 # Balance sizes (equal split)
 alt-shift-b = 'balance-sizes'
 
+# Set 2/3 width for focused window (ultrawide layout)
+alt-shift-u = 'resize width 200'
+
 # Workspaces (1-9)
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
@@ -76,8 +79,8 @@ alt-shift-9 = 'move-node-to-workspace 9'
 
 # Cycle through windows in accordion (your right-side stack)
 alt-tab = 'focus-back-and-forth'
-alt-period = 'focus --boundaries-action wrap-around-the-workspace next'
-alt-shift-period = 'focus --boundaries-action wrap-around-the-workspace prev'
+alt-period = 'focus --boundaries-action wrap-around-the-workspace dfs-next'
+alt-shift-period = 'focus --boundaries-action wrap-around-the-workspace dfs-prev'
 
 # ──────────────────────────────────────────────
 # Resize mode (alt-r to enter, esc to exit)
@@ -97,7 +100,7 @@ esc = 'mode main'
 # ──────────────────────────────────────────────
 [[on-window-detected]]
 if.app-id = 'com.jetbrains.intellij'
-run = ['layout tiling', 'resize width 66%']
+run = ['layout tiling']
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
