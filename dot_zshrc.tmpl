@@ -98,5 +98,8 @@ brew() {
 }
 {{- end }}
 
+# Local overrides (not tracked by chezmoi)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # Starship prompt (must be last)
 eval "$(starship init zsh)"
