@@ -93,8 +93,12 @@ enter = 'mode main'
 esc = 'mode main'
 
 # ──────────────────────────────────────────────
-# Auto-layout: right-side apps open in accordion
+# Auto-layout: IntelliJ 2/3 left, right-side apps in accordion
 # ──────────────────────────────────────────────
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.intellij'
+run = ['layout tiling', 'resize width 66%']
+
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = ['layout accordion']
