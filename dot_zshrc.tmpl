@@ -80,7 +80,7 @@ export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
 # SDKMAN
-export SDKMAN_DIR="$(brew --prefix sdkman-cli)/libexec"
+export SDKMAN_DIR="/opt/homebrew/opt/sdkman-cli/libexec"
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 {{- if .is_main_account }}
 
