@@ -53,9 +53,9 @@ alt-shift-f = 'layout floating tiling'
 alt-shift-b = 'balance-sizes'
 
 # ──────────────────────────────────────────────
-# Magnet-style shortcuts (ctrl+alt = ctrl+option)
+# Window management shortcuts (ctrl+option)
 # ──────────────────────────────────────────────
-# Halves
+# Move window in tiling tree
 ctrl-alt-left = 'move left'
 ctrl-alt-right = 'move right'
 ctrl-alt-up = 'move up'
@@ -64,13 +64,12 @@ ctrl-alt-down = 'move down'
 # Fullscreen
 ctrl-alt-enter = 'fullscreen'
 
-# Thirds
-ctrl-alt-d = ['resize width 100', 'move left']    # left 1/3
-ctrl-alt-g = ['resize width 100', 'move right']   # right 1/3
+# Equal split
+ctrl-alt-b = 'balance-sizes'
 
-# Two-thirds
-ctrl-alt-e = ['resize width 200', 'move left']    # left 2/3
-ctrl-alt-t = ['resize width 200', 'move right']   # right 2/3
+# Resize focused window wider/narrower
+ctrl-alt-e = 'resize width +100'   # grow (towards 2/3)
+ctrl-alt-d = 'resize width -100'   # shrink (towards 1/3)
 
 # Workspaces (1-9)
 alt-1 = 'workspace 1'
