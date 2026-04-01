@@ -1,3 +1,8 @@
 # Claude Code
 .claude/
 [Cc][Ll][Aa][Uu][Dd][Ee].[Mm][Dd]
+
+# Ruflo
+.claude-flow/
+.ruflo/
+.hive-mind/
