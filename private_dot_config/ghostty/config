@@ -9,6 +9,7 @@ theme = Catppuccin Mocha
 
 # cleaner look on macOS
 macos-titlebar-style = tabs
+window-new-tab-position = current
 
 background-opacity = 0.95
 
