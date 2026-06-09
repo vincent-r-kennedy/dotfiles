@@ -53,7 +53,7 @@ setopt AUTO_CD
 setopt CORRECT
 setopt NO_BEEP
 
-# SDKMAN (must be before aliases — init script uses `find` internally)
+# SDKMAN
 export SDKMAN_DIR="/opt/homebrew/opt/sdkman-cli/libexec"
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
@@ -64,8 +64,6 @@ alias b='bat'                          # bat shorthand, cat still works normally
 alias ls='eza --icons'
 alias ll='eza -la --icons --git'
 alias la='eza -a --icons'
-alias grep='rg'
-alias find='fd'
 
 # ──────────────────────────────────────────────
 # Tools
@@ -104,3 +102,6 @@ brew() {
 
 # Starship prompt (must be last)
 eval "$(starship init zsh)"
+
+# Claude Code native install (and other ~/.local/bin tools)
+export PATH="$HOME/.local/bin:$PATH"
