@@ -2,7 +2,10 @@
 {{- $email := promptStringOnce . "email" "Git email" -}}
 {{- $is_main := promptStringOnce . "is_main_raw" "Is this the main (homebrew admin) account? (yes/no)" -}}
 
+sourceDir = "{{ .chezmoi.homeDir }}/projects/vincent/dotfiles"
+
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}
+    is_main_raw = {{ $is_main | quote }}
     is_main_account = {{ eq $is_main "yes" }}

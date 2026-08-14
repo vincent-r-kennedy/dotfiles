@@ -1,14 +1,20 @@
+# Fail-closed: no identity and no SSH key at the global level.
+# Each entity dir under ~/projects/<entity>/ gets its own via includeIf below —
+# anything outside an entity dir cannot commit or authenticate to GitHub.
 [user]
-	name = {{ .name }}
-	email = {{ .email }}
+	useConfigOnly = true
 [core]
 	editor = nano
-	sshCommand = ssh -i ~/.ssh/id_ed25519
 	excludesFile = ~/.gitignore_global
 [init]
 	defaultBranch = main
 [push]
 	autoSetupRemote = true
+
+[includeIf "gitdir:~/projects/vincent/"]
+	path = ~/.gitconfig-vincent
+[includeIf "gitdir:~/projects/vicoco/"]
+	path = ~/.gitconfig-vicoco
 
 # Local overrides (not tracked by chezmoi)
 [include]

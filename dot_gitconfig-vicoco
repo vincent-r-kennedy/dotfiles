@@ -1,0 +1,9 @@
+# Identity + credentials for ~/projects/vicoco/ (company GitHub: vicoco-admin)
+[user]
+	name = vicoco-admin
+	email = admin@vicoco.ai
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_vicoco -o IdentitiesOnly=yes
+# Force SSH so the wrong HTTPS credential can never be used
+[url "git@github.com:"]
+	insteadOf = https://github.com/

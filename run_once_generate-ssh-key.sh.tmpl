@@ -1,14 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
-if [[ ! -f ~/.ssh/id_ed25519 ]]; then
+# One key per GitHub entity — see dot_gitconfig.tmpl for the includeIf wiring.
+if [[ ! -f ~/.ssh/id_ed25519_vincent ]]; then
   mkdir -p ~/.ssh
   chmod 700 ~/.ssh
-  ssh-keygen -t ed25519 -C {{ .email | quote }} -f ~/.ssh/id_ed25519 -N ""
+  ssh-keygen -t ed25519 -C {{ .email | quote }} -f ~/.ssh/id_ed25519_vincent -N ""
   echo "SSH key generated. Add it to GitHub with:"
-  echo "  gh ssh-key add ~/.ssh/id_ed25519.pub --title \"$(hostname)\""
+  echo "  gh ssh-key add ~/.ssh/id_ed25519_vincent.pub --title \"$(hostname)\""
 else
   echo "SSH key already exists, skipping generation"
+fi
+
+if [[ ! -f ~/.ssh/id_ed25519_vicoco ]]; then
+  ssh-keygen -t ed25519 -C "vincent@vicoco" -f ~/.ssh/id_ed25519_vicoco -N ""
+  echo "vicoco SSH key generated — add ~/.ssh/id_ed25519_vicoco.pub to the vicoco GitHub account"
 fi
 
 # Add GitHub to known_hosts if not present

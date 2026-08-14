@@ -1,7 +1,9 @@
 Include ~/.colima/ssh_config
 
+# Fail-closed: no IdentityFile here. Per-entity git configs supply the key via
+# core.sshCommand (-i ~/.ssh/id_ed25519_<entity>); outside an entity dir ssh
+# offers no key at all, so the wrong account can never be used by accident.
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519
   IdentitiesOnly yes

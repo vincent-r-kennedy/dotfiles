@@ -1,0 +1,9 @@
+# Identity + credentials for ~/projects/vincent/ (personal GitHub: vincent-r-kennedy)
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_vincent -o IdentitiesOnly=yes
+# Force SSH so the wrong HTTPS credential can never be used
+[url "git@github.com:"]
+	insteadOf = https://github.com/
